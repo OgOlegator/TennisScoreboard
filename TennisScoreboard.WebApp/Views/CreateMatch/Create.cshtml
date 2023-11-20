@@ -1,0 +1,38 @@
+﻿@model CreateViewModel
+
+@{
+    ViewData["Title"] = "Новый матч";
+}
+
+<form asp-action="Create" method="post">
+
+    <div class="container border p-3">
+        <h1 class=text-black>@ViewData["Title"]</h1>
+
+        <hr />
+        <div class="row">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+
+            <div class="col-2">
+                <label asp-for="NamePlayer1" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="NamePlayer1" class="form-control" />
+                <span asp-validation-for="NamePlayer1" class="text-danger"></span>
+            </div>
+
+            <div class="col-2">
+                <label asp-for="NamePlayer2" class="control-label pt-2" style="font-size:20px;"></label>
+            </div>
+            <div class="col-10 pb-3">
+                <input asp-for="NamePlayer2" class="form-control" />
+                <span asp-validation-for="NamePlayer2" class="text-danger"></span>
+            </div>
+
+            <div class="col 5">
+                <input type="submit" value="Создать" class="btn btn-success form-control" />
+            </div>
+        </div>
+    </div>
+
+</form>
