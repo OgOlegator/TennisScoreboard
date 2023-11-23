@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 using TennisScoreboard.Application.Common.Interfaces;
 using TennisScoreboard.Domain.Entities;
 
@@ -16,6 +17,22 @@ namespace TennisScoreboard.Application.Players
         public PlayerRepository(IApplicationDbContext context)
         {
             _context = context;
+        }
+
+        public async Task<Player> GetById(int id)
+        {
+            try
+            {
+                return await _context.Players.FirstOrDefaultAsync(player => player.Id == id);
+            }
+            catch (ArgumentNullException ex)
+            {
+                throw new Exception("Задано некорректное имя игрока");
+            }
+            catch (OperationCanceledException ex)
+            {
+                throw new Exception("Ошибка при получении данных игрока");
+            }
         }
 
         /// <summary>
