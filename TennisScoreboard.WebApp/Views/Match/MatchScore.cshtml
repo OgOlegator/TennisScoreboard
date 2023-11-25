@@ -12,45 +12,38 @@
 }
 
 @{
-    await Scoreboard();
+    var matchId = Context.Request.Query.FirstOrDefault(key => key.Key == "uuid").Value.ToString();
+    _cache.TryGetValue(matchId, out MatchService match);
+
+    var player1 = await _playerRep.GetById(match.IdPlayer1);
+    var player2 = await _playerRep.GetById(match.IdPlayer2);
+
+    var routeWinPlayer1 = new Dictionary<string, string> { { "pointWinner", player1.Id.ToString() }, { "uuid", matchId } };
+    var routeWinPlayer2 = new Dictionary<string, string> { { "pointWinner", player2.Id.ToString() }, { "uuid", matchId } };
 }
 
-@{
-    async Task Scoreboard()
-    {
-        var matchId = Context.Request.Query.FirstOrDefault(key => key.Key == "uuid").Value.ToString();
-        _cache.TryGetValue(matchId, out MatchService match);
+<form asp-action="MatchScore" method="post">
+    <li>
+        @player1.Name: @match.ScorePlayer1
+    </li>
+    <br />
+    <li>
+        @player2.Name: @match.ScorePlayer2
+    </li>
 
-        var player1 = await _playerRep.GetById(match.IdPlayer1);
-        var player2 = await _playerRep.GetById(match.IdPlayer2);
+    <div class="col-5 offset-2">
+        <input type="submit"
+            value="Победа @player1.Name"
+            class="btn btn-success form-control"
+            asp-all-route-data="routeWinPlayer1" />
+    </div>
 
-        var routeWinPlayer1 = new Dictionary<string, string> { { "pointWinner", player1.Id.ToString() }, { "uuid", matchId } };
-        var routeWinPlayer2 = new Dictionary<string, string> { { "pointWinner", player2.Id.ToString() }, { "uuid", matchId } };
+    <br />
 
-        <form asp-action="MatchScore" method="post">
-            <li>
-                @player1.Name: @match.ScorePlayer1
-            </li>
-            <br />
-            <li>
-                @player2.Name: @match.ScorePlayer2
-            </li>
-
-            <div class="col-5 offset-2">
-                <input type="submit"
-                   value="Победа @player1.Name"
-                   class="btn btn-success form-control"
-                   asp-all-route-data="routeWinPlayer1" />
-            </div>
-
-            <br />
-
-            <div class="col 5" offset-2">
-                <input type="submit"
-                    value="Победа @player2.Name"
-                    class="btn btn-success form-control"
-                    asp-all-route-data="routeWinPlayer2" />
-            </div>
-        </form>
-    }
-}
+    <div class="col 5" offset-2">
+        <input type="submit"
+            value="Победа @player2.Name"
+            class="btn btn-success form-control"
+            asp-all-route-data="routeWinPlayer2" />
+    </div>
+</form>
