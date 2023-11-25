@@ -24,40 +24,33 @@
         var player1 = await _playerRep.GetById(match.IdPlayer1);
         var player2 = await _playerRep.GetById(match.IdPlayer2);
 
-        void WinPlayer1()
-            => Model.IdPointWinner = match.IdPlayer1;
+        var routeWinPlayer1 = new Dictionary<string, string> { { "pointWinner", player1.Id.ToString() }, { "uuid", matchId } };
+        var routeWinPlayer2 = new Dictionary<string, string> { { "pointWinner", player2.Id.ToString() }, { "uuid", matchId } };
 
-        void WinPlayer2()
-            => Model.IdPointWinner = match.IdPlayer2;
-
-        <form asp-action="MatchScore" method="post" asp-route-uuid="@matchId">
+        <form asp-action="MatchScore" method="post">
             <li>
                 @player1.Name: @match.ScorePlayer1
             </li>
-            <br/>
+            <br />
             <li>
                 @player2.Name: @match.ScorePlayer2
             </li>
 
             <div class="col-5 offset-2">
-                <input 
-                    type="submit"
-                    value="Победа @player1.Name"
-                    class="btn btn-success form-control" 
-                    onclick="WinPlayer1()" />
+                <input type="submit"
+                   value="Победа @player1.Name"
+                   class="btn btn-success form-control"
+                   asp-all-route-data="routeWinPlayer1" />
             </div>
 
             <br />
 
             <div class="col 5" offset-2">
-                <input 
-                    type="submit"
+                <input type="submit"
                     value="Победа @player2.Name"
-                    class="btn btn-success form-control" 
-                    onclick="WinPlayer2()" />
+                    class="btn btn-success form-control"
+                    asp-all-route-data="routeWinPlayer2" />
             </div>
-
-            <input type="text" name="Model.IdPointWinner" hidden/>
         </form>
     }
 }
