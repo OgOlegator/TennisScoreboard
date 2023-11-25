@@ -71,7 +71,7 @@ namespace TennisScoreboard.WebApp.Controllers
             if (!_cache.TryGetValue(uuid, out _))
                 return NotFound();
 
-            return View(new MatchScoreViewModel());
+            return View();
         }
 
         [HttpPost]
