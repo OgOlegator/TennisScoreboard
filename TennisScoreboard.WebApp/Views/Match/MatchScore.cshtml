@@ -1,4 +1,6 @@
-﻿@using Microsoft.Extensions.Caching.Memory
+﻿@model MatchScoreViewModel
+
+@using Microsoft.Extensions.Caching.Memory
 @using TennisScoreboard.Application.Common.Interfaces
 @using TennisScoreboard.Infrastructure.Services
 
@@ -15,33 +17,24 @@
 
     var player1 = await _playerRep.GetById(match.IdPlayer1);
     var player2 = await _playerRep.GetById(match.IdPlayer2);
-
-    var routeWinPlayer1 = new Dictionary<string, string> { { "pointWinner", player1.Id.ToString() }, { "uuid", matchId } };
-    var routeWinPlayer2 = new Dictionary<string, string> { { "pointWinner", player2.Id.ToString() }, { "uuid", matchId } };
 }
 
-<form asp-action="MatchScore" method="post">
-    <li>
-        @player1.Name: @match.ScorePlayer1
-    </li>
-    <br />
-    <li>
-        @player2.Name: @match.ScorePlayer2
-    </li>
+<li>
+    @player1.Name: @match.PointsPlayer1
+</li>
+<br />
+<li>
+    @player2.Name: @match.PointsPlayer2
+</li>
 
+<form asp-action="MatchScore" method="post" asp-route-uuid="@matchId">
     <div class="col-5 offset-2">
-        <input type="submit"
-            value="Победа @player1.Name"
-            class="btn btn-success form-control"
-            asp-all-route-data="routeWinPlayer1" />
+        <button type="submit" name="IdPointWinner" value="@player1.Id" class="btn btn-success form-control">Игрок 1 выиграл текущее очко</button>
     </div>
 
     <br />
 
     <div class="col 5" offset-2">
-        <input type="submit"
-            value="Победа @player2.Name"
-            class="btn btn-success form-control"
-            asp-all-route-data="routeWinPlayer2" />
+        <button type="submit" name="IdPointWinner" value="@player2.Id" class="btn btn-success form-control">Игрок 2 выиграл текущее очко</button>
     </div>
 </form>

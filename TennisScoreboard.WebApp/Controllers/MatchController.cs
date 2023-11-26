@@ -76,12 +76,12 @@ namespace TennisScoreboard.WebApp.Controllers
 
         [HttpPost]
         [Route("match-score")]
-        public async Task<IActionResult> MatchScore(string pointWinner, string uuid)
+        public async Task<IActionResult> MatchScore(MatchScoreViewModel model, string uuid)
         {
             if (!_cache.TryGetValue(uuid, out MatchService match))
                 return NotFound();
 
-            match.PointForPlayer(int.Parse(pointWinner));
+            match.AddPointForPlayer(model.IdPointWinner);
 
             return RedirectToAction(nameof(MatchScore), new { uuid = uuid });
         }

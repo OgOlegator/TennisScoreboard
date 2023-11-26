@@ -11,26 +11,10 @@ namespace TennisScoreboard.Infrastructure.Services
     {
         public readonly int IdPlayer1;
         public readonly int IdPlayer2;
-        
-        /// <summary>
-        /// Счет в сете игрока 1
-        /// </summary>
-        public int ScorePlayer1 { get; private set; } = 0;
 
-        /// <summary>
-        /// Счет в сете игрока 2
-        /// </summary>
-        public int ScorePlayer2 { get; private set; } = 0;
+        private int CurrentSetNumber = 1;
 
-        /// <summary>
-        /// Счет по сетам игрока 1
-        /// </summary>
-        public int ScoreSetPlayer1 { get; private set; } = 0;
-
-        /// <summary>
-        /// Счет по сетам игрока 2
-        /// </summary>
-        public int ScoreSetPlayer2 { get; private set; } = 0;
+        public List<SetService> Sets { get; private set; } = new List<SetService>();
 
         public int WinnerId { get; private set; } = -1;
 
@@ -38,19 +22,18 @@ namespace TennisScoreboard.Infrastructure.Services
         {
             IdPlayer1 = idPlayer1;
             IdPlayer2 = idPlayer2;
+
+            Sets.Add(new SetService(1));
+            Sets.Add(new SetService(2));
+            Sets.Add(new SetService(3));
         }
 
         public static string GetNewMatchId()
             => Guid.NewGuid().ToString("D");
 
-        public void PointForPlayer(int playerId)
+        public void AddPointForPlayer(int playerId)
         {
-            if (playerId == IdPlayer1)
-                ScorePlayer1 += 15;
-            else if (playerId == IdPlayer2)
-                ScorePlayer2 += 15;
-            else
-                throw new ArgumentException();
+            
         }
     }
 }
