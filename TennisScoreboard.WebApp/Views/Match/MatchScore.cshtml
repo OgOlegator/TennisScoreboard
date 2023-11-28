@@ -17,9 +17,7 @@
 
     var player1 = await _playerRep.GetById(match.IdPlayer1);
     var player2 = await _playerRep.GetById(match.IdPlayer2);
-}
 
-@{
     string GetNameWinnerPlayer()
         => match.WinnerId == player1.Id ? player1.Name : player2.Name;
 }
