@@ -9,7 +9,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TennisScoreboard.Domain", "
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TennisScoreboard.Infrastructure", "TennisScoreboard.Infrastructure\TennisScoreboard.Infrastructure.csproj", "{F3B1DA8E-9D07-45F0-98B1-C56E10AC6EB7}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TennisScoreboard.Application", "TennisScoreboard.Application\TennisScoreboard.Application.csproj", "{760A73EB-BD73-46CE-8108-14161CFB0872}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TennisScoreboard.Application", "TennisScoreboard.Application\TennisScoreboard.Application.csproj", "{760A73EB-BD73-46CE-8108-14161CFB0872}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TennisScoreboard.UnitTests", "TennisScoreboard.UnitTests\TennisScoreboard.UnitTests.csproj", "{A72450E3-1E78-4D66-8726-486D901031A4}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -33,6 +35,10 @@ Global
 		{760A73EB-BD73-46CE-8108-14161CFB0872}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{760A73EB-BD73-46CE-8108-14161CFB0872}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{760A73EB-BD73-46CE-8108-14161CFB0872}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A72450E3-1E78-4D66-8726-486D901031A4}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A72450E3-1E78-4D66-8726-486D901031A4}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A72450E3-1E78-4D66-8726-486D901031A4}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A72450E3-1E78-4D66-8726-486D901031A4}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -81,7 +81,7 @@ namespace TennisScoreboard.WebApp.Controllers
             if (!_cache.TryGetValue(uuid, out MatchService match))
                 return NotFound();
 
-            match.AddPointForPlayer(model.IdPointWinner);
+            match.AddPointForPlayer(match.GetWinPlayerById(model.IdPointWinner));
 
             return RedirectToAction(nameof(MatchScore), new { uuid = uuid });
         }

@@ -19,22 +19,71 @@
     var player2 = await _playerRep.GetById(match.IdPlayer2);
 }
 
-<li>
-    @player1.Name: @match.PointsPlayer1
-</li>
-<br />
-<li>
-    @player2.Name: @match.PointsPlayer2
-</li>
+<h1>
+    Матч @player1.Name - @player2.Name
+</h1>
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Players
+            </th>
+            <th>
+                Points
+            </th>
+            <th>
+                S1
+            </th>
+            <th>
+                S2
+            </th>
+            <th>
+                S3
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td>
+                @player1.Name
+            </td>
+            <td>
+                @match.GetCurrentSet().Game.ScorePlayer1
+            </td>
+            <td>
+                @match.GetSetByNumber(1).ScorePlayer1
+            </td>
+            <td>
+                @match.GetSetByNumber(2).ScorePlayer1
+            </td>
+            <td>
+                @match.GetSetByNumber(3).ScorePlayer1
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @player2.Name
+            </td>
+            <td>
+                @match.GetCurrentSet().Game.ScorePlayer2
+            </td>
+            <td>
+                @match.GetSetByNumber(1).ScorePlayer2
+            </td>
+            <td>
+                @match.GetSetByNumber(2).ScorePlayer2
+            </td>
+            <td>
+                @match.GetSetByNumber(3).ScorePlayer2
+            </td>
+        </tr>
+    </tbody>
+</table>
 
 <form asp-action="MatchScore" method="post" asp-route-uuid="@matchId">
-    <div class="col-5 offset-2">
-        <button type="submit" name="IdPointWinner" value="@player1.Id" class="btn btn-success form-control">Игрок 1 выиграл текущее очко</button>
-    </div>
-
-    <br />
-
-    <div class="col 5" offset-2">
-        <button type="submit" name="IdPointWinner" value="@player2.Id" class="btn btn-success form-control">Игрок 2 выиграл текущее очко</button>
+    <div class="col text-md-center pt-1">
+        <button type="submit" name="IdPointWinner" value="@player1.Id" class="btn btn-outline-dark">Игрок 1 выиграл текущее очко</button>
+        <button type="submit" name="IdPointWinner" value="@player2.Id" class="btn btn-outline-dark">Игрок 2 выиграл текущее очко</button>
     </div>
 </form>

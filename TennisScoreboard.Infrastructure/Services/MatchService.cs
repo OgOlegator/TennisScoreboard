@@ -35,7 +35,7 @@ namespace TennisScoreboard.Infrastructure.Services
             if (IsFinished)
                 throw new Exception("Сет окончен");
 
-            var set = Sets.FirstOrDefault(set => set.Number == CurrentSetNumber);
+            var set = GetCurrentSet();
 
             set.AddPointForPlayer(winPlayer);
 
@@ -43,16 +43,19 @@ namespace TennisScoreboard.Infrastructure.Services
                 return;
 
             if (winPlayer == WinPlayer.First)
-                ScorePlayer1 += 1;
+                ScorePlayer1++;
             else
-                ScorePlayer2 += 1;
+                ScorePlayer2++;
 
             CheckFinished();
+
+            if(!IsFinished)
+                CurrentSetNumber++;
         }
 
         private void CheckFinished()
         {
-            if (ScorePlayer1 >= 2 && ScorePlayer2 >= 2)
+            if (ScorePlayer1 < 2 && ScorePlayer2 < 2)
                 return;
 
             IsFinished = true;
@@ -61,6 +64,19 @@ namespace TennisScoreboard.Infrastructure.Services
 
         public static string GetNewMatchId()
             => Guid.NewGuid().ToString("D");
+
+        public SetService GetCurrentSet()
+            => GetSetByNumber(CurrentSetNumber);
+
+        public SetService GetSetByNumber(int number)
+        {
+            var set = Sets.FirstOrDefault(set => set.Number == number);
+
+            if (set == null)
+                throw new ArgumentException("Передан некорректный номер сета");
+
+            return set;
+        }
 
         public WinPlayer GetWinPlayerById(int playerId)
         {

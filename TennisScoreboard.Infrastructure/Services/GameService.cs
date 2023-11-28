@@ -40,6 +40,13 @@ namespace TennisScoreboard.Infrastructure.Services
             else if (winPlayer == WinPlayer.Second)
                 ScorePlayer2 += GetPoint(ScorePlayer2);
 
+            if (ScorePlayer1 == 40 && ScorePlayer2 == 40)
+            {
+                IsMoreLess = true;
+                ScorePlayer1 = 0;
+                ScorePlayer2 = 0;
+            }
+
             int GetPoint(int pointsPlayer)
             {
                 if (pointsPlayer <= 15)
@@ -77,21 +84,13 @@ namespace TennisScoreboard.Infrastructure.Services
 
         private void CheckFinished()
         {
-            if(IsMoreLess)
+            if (IsMoreLess)
             {
                 if (ScorePlayer1 == 2 || ScorePlayer2 == 2)
                     IsFinished = true;
             }
             else
             {
-                if (ScorePlayer1 == 40 && ScorePlayer2 == 40 && ScorePlayer1 == ScorePlayer2)
-                {
-                    IsMoreLess = true;
-                    ScorePlayer1 = 0;
-                    ScorePlayer2 = 0;
-                    return;
-                }
-
                 if (ScorePlayer1 > 40 || ScorePlayer2 > 40)
                     IsFinished = true;
             }
