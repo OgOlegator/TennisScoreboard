@@ -3,18 +3,15 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using TennisScoreboard.Application.Common.Abstractions;
+using TennisScoreboard.Application.Common.Interfaces;
 using TennisScoreboard.Domain.Enums;
 
 namespace TennisScoreboard.Infrastructure.Services
 {
-    public class TieBreakService
+    public class TieBreakService : AbstractMatchStage
     {
-        public bool IsFinished { get; private set; } = false;
-
-        public int ScorePlayer1 { get; private set; } = 0;
-        public int ScorePlayer2 { get; private set; } = 0;
-
-        public void AddPointForPlayer(WinPlayer winPlayer)
+        public override void AddPointForPlayer(WinPlayer winPlayer)
         {
             if (IsFinished)
                 throw new Exception("Тай-брейк окончен");
