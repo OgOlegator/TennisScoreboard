@@ -19,9 +19,25 @@
     var player2 = await _playerRep.GetById(match.IdPlayer2);
 }
 
-<h1>
-    Матч @player1.Name - @player2.Name
-</h1>
+@{
+    string GetNameWinnerPlayer()
+        => match.WinnerId == player1.Id ? player1.Name : player2.Name;
+}
+
+<div class="text-md-center">
+    <h1>
+        Матч @player1.Name - @player2.Name
+    </h1>
+
+    <br />
+
+    @if (match.IsFinished)
+    {
+        <h3>
+            Матч окончен. Победитель: @GetNameWinnerPlayer()
+        </h3>
+    }
+</div>
 
 <table class="table">
     <thead>
