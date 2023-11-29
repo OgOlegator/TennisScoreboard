@@ -83,7 +83,17 @@ namespace TennisScoreboard.WebApp.Controllers
 
             match.AddPointForPlayer(match.GetWinPlayerById(model.IdPointWinner));
 
+            if(match.IsFinished)
+            {
+
+            }
+
             return RedirectToAction(nameof(MatchScore), new { uuid = uuid });
+        }
+
+        private void EndMatch(MatchService match)
+        {
+
         }
     }
 }

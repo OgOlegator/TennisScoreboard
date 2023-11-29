@@ -67,26 +67,19 @@ namespace TennisScoreboard.Infrastructure.Services
         private void AddPointInMoreLessStage(WinPlayer winPlayer)
         {
             if (winPlayer == WinPlayer.First)
-            {
-                if (ScorePlayer2 == 1)
-                    ScorePlayer2 -= 1;
-                else
-                    ScorePlayer1 += 1;
-            }
+                ScorePlayer1++;
             else if (winPlayer == WinPlayer.Second)
-            {
-                if (ScorePlayer1 == 1)
-                    ScorePlayer1 -= 1;
-                else
-                    ScorePlayer2 += 1;
-            }
+                ScorePlayer2++;
         }
 
         private void CheckFinished()
         {
             if (IsMoreLess)
             {
-                if (ScorePlayer1 == 2 || ScorePlayer2 == 2)
+                if (ScorePlayer1 - 2 == ScorePlayer2)
+                    IsFinished = true;
+
+                if (ScorePlayer2 - 2 == ScorePlayer1)
                     IsFinished = true;
             }
             else

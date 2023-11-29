@@ -17,9 +17,9 @@ namespace TennisScoreboard.Infrastructure.Services
                 throw new Exception("Тай-брейк окончен");
 
             if (winPlayer == WinPlayer.First)
-                ScorePlayer1 += 1;
+                ScorePlayer1++;
             else if (winPlayer == WinPlayer.Second)
-                ScorePlayer2 += 1;
+                ScorePlayer2++;
 
             CheckFinished();    
         }
