@@ -28,6 +28,7 @@ namespace TennisScoreboard.WebApp.Controllers
             var source = _context.Matches
                 .Include(match => match.Player1)
                 .Include(match => match.Player2)
+                .Include(match => match.PlayerWinner)
                 .Where(match
                     => string.IsNullOrEmpty(filterByPlayerName)
                     || match.Player1.Name.Contains(filterByPlayerName)
@@ -45,6 +46,7 @@ namespace TennisScoreboard.WebApp.Controllers
             {
                 Matches = matches,
                 PageInfo = pageInfo,
+                FilterByPlayerName = filterByPlayerName,
             };
 
             return View(model);

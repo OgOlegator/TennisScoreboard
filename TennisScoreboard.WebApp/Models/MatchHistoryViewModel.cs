@@ -7,5 +7,7 @@ namespace TennisScoreboard.WebApp.Models
         public List<Match> Matches { get; set; }  
 
         public PageViewModel PageInfo { get; set; }
+
+        public string FilterByPlayerName { get; set; }
     }
 }

@@ -4,3 +4,71 @@
     ViewData["Title"] = $"История матчей";
 }
 
+<div class="text-md-center">
+    <h1>
+        История матчей
+    </h1>
+</div>
+
+<br />
+
+<form asp-action="Get" method="get" asp-route-filterByPlayerName="@Model.FilterByPlayerName">
+    <label class="control-label pt-2" style="font-size:20px;">Игрок:</label>
+    <input type="text" asp-for="FilterByPlayerName" />
+    <button type="submit" class="btn btn-outline-dark">Поиск</button>
+</form>
+
+<br />
+
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                Игрок 1
+            </th>
+            <th>
+                Игрок 2
+            </th>
+            <th>
+                Победитель
+            </th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach(var match in Model.Matches)
+        {
+            <tr>
+                <td>
+                    @match.Player1.Name
+                </td>
+                <td>
+                    @match.Player2.Name
+                </td>
+                <td>
+                    @match.PlayerWinner.Name
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
+
+<div class="text-md-center">
+    @if (Model.PageInfo.HasPreviousPage)
+    {
+        <a asp-action="Get"
+            asp-route-page="@(Model.PageInfo.Number - 1)"
+            asp-route-filterByPlayerName="@Model.FilterByPlayerName"
+            class="btn btn-outline-dark">
+            <i class="glyphicon glyphicon-chevron-left"></i> Назад
+        </a>
+    }
+    @if (Model.PageInfo.HasNextPage)
+    {
+        <a asp-action="Get"
+           asp-route-page="@(Model.PageInfo.Number + 1)"
+           asp-route-filterByPlayerName="@Model.FilterByPlayerName"
+           class="btn btn-outline-dark">
+           Вперед <i class="glyphicon glyphicon-chevron-right"></i>
+        </a>
+    }
+</div>
