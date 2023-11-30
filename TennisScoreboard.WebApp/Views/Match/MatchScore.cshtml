@@ -1,35 +1,24 @@
 ﻿@model MatchScoreViewModel
 
-@using Microsoft.Extensions.Caching.Memory
-@using TennisScoreboard.Application.Common.Interfaces
-@using TennisScoreboard.Infrastructure.Services
-
-@inject IMemoryCache _cache
-@inject IPlayerRepository _playerRep;
-
 @{
-    ViewData["Title"] = $"Матч {Context.Request.Query.FirstOrDefault(key => key.Key == "uuid").Value}";
+    var matchId = Context.Request.Query.FirstOrDefault(key => key.Key == "uuid").Value.ToString();
+
+    string GetNameWinnerPlayer()
+        => Model.Match.WinnerId == Model.Player1.Id ? Model.Player1.Name : Model.Player2.Name;
 }
 
 @{
-    var matchId = Context.Request.Query.FirstOrDefault(key => key.Key == "uuid").Value.ToString();
-    _cache.TryGetValue(matchId, out MatchService match);
-
-    var player1 = await _playerRep.GetById(match.IdPlayer1);
-    var player2 = await _playerRep.GetById(match.IdPlayer2);
-
-    string GetNameWinnerPlayer()
-        => match.WinnerId == player1.Id ? player1.Name : player2.Name;
+    ViewData["Title"] = $"Матч {matchId}";
 }
 
 <div class="text-md-center">
     <h1>
-        Матч @player1.Name - @player2.Name
+        Матч @Model.Player1.Name - @Model.Player2.Name
     </h1>
 
     <br />
 
-    @if (match.IsFinished)
+    @if (Model.Match.IsFinished)
     {
         <h3>
             Матч окончен. Победитель: @GetNameWinnerPlayer()
@@ -60,44 +49,47 @@
     <tbody>
         <tr>
             <td>
-                @player1.Name
+                @Model.Player1.Name
             </td>
             <td>
-                @match.GetCurrentSet().Game.ScorePlayer1
+                @Model.Match.GetCurrentSet().Game.ScorePlayer1
             </td>
             <td>
-                @match.GetSetByNumber(1).ScorePlayer1
+                @Model.Match.GetSetByNumber(1).ScorePlayer1
             </td>
             <td>
-                @match.GetSetByNumber(2).ScorePlayer1
+                @Model.Match.GetSetByNumber(2).ScorePlayer1
             </td>
             <td>
-                @match.GetSetByNumber(3).ScorePlayer1
+                @Model.Match.GetSetByNumber(3).ScorePlayer1
             </td>
         </tr>
         <tr>
             <td>
-                @player2.Name
+                @Model.Player2.Name
             </td>
             <td>
-                @match.GetCurrentSet().Game.ScorePlayer2
+                @Model.Match.GetCurrentSet().Game.ScorePlayer2
             </td>
             <td>
-                @match.GetSetByNumber(1).ScorePlayer2
+                @Model.Match.GetSetByNumber(1).ScorePlayer2
             </td>
             <td>
-                @match.GetSetByNumber(2).ScorePlayer2
+                @Model.Match.GetSetByNumber(2).ScorePlayer2
             </td>
             <td>
-                @match.GetSetByNumber(3).ScorePlayer2
+                @Model.Match.GetSetByNumber(3).ScorePlayer2
             </td>
         </tr>
     </tbody>
 </table>
 
-<form asp-action="MatchScore" method="post" asp-route-uuid="@matchId">
-    <div class="col text-md-center pt-1">
-        <button type="submit" name="IdPointWinner" value="@player1.Id" class="btn btn-outline-dark">Игрок 1 выиграл текущее очко</button>
-        <button type="submit" name="IdPointWinner" value="@player2.Id" class="btn btn-outline-dark">Игрок 2 выиграл текущее очко</button>
-    </div>
-</form>
+@if (!Model.Match.IsFinished)
+{
+    <form asp-action="MatchScore" method="post" asp-route-uuid="@matchId">
+        <div class="col text-md-center pt-1">
+            <button type="submit" name="IdPointWinner" value="@Model.Player1.Id" class="btn btn-outline-dark">Игрок 1 выиграл текущее очко</button>
+            <button type="submit" name="IdPointWinner" value="@Model.Player2.Id" class="btn btn-outline-dark">Игрок 2 выиграл текущее очко</button>
+        </div>
+    </form>
+}

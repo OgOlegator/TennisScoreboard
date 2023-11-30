@@ -3,7 +3,7 @@
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>@ViewData["Title"] - TennisScoreboard.WebApp</title>
+    <title>@ViewData["Title"] - Табло теннисного матча</title>
     <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/TennisScoreboard.WebApp.styles.css" asp-append-version="true" />
@@ -23,10 +23,10 @@
                             <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Index">Home</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="Match" asp-action="Create">Новый матч</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link text-dark" asp-area="" asp-controller="Match" asp-action="Create">New</a>
+                            <a class="nav-link text-dark" asp-area="" asp-controller="MatchHistory" asp-action="Get">История матчей</a>
                         </li>
                     </ul>
                 </div>
@@ -41,7 +41,7 @@
 
     <footer class="border-top footer text-muted">
         <div class="container">
-            &copy; 2023 - TennisScoreboard.WebApp - <a asp-area="" asp-controller="Home" asp-action="Privacy">Privacy</a>
+            &copy; 2023 - Табло теннисного матча
         </div>
     </footer>
     <script src="~/lib/jquery/dist/jquery.min.js"></script>

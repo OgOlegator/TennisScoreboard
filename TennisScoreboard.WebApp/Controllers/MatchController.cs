@@ -12,12 +12,14 @@ namespace TennisScoreboard.WebApp.Controllers
     public class MatchController : Controller
     {
         private readonly IPlayerRepository _playerRep;
+        private readonly IMatchRepository _matchRep;
         private readonly IMemoryCache _cache;
 
-        public MatchController(IPlayerRepository playerRepository, IMemoryCache cache)
+        public MatchController(IPlayerRepository playerRepository, IMemoryCache cache, IMatchRepository matchRep)
         {
             _playerRep = playerRepository;
             _cache = cache;
+            _matchRep = matchRep;
         }
 
         [HttpGet]
@@ -68,32 +70,36 @@ namespace TennisScoreboard.WebApp.Controllers
         [Route("match-score")]
         public async Task<IActionResult> MatchScore(string uuid)
         {
-            if (!_cache.TryGetValue(uuid, out _))
+            if (!_cache.TryGetValue(uuid, out MatchService match))
                 return NotFound();
 
-            return View();
+            return View(await GetMatchScoreViewModel(match));
         }
 
         [HttpPost]
         [Route("match-score")]
-        public async Task<IActionResult> MatchScore(MatchScoreViewModel model, string uuid)
+        public async Task<IActionResult> MatchScore(MatchScoreViewModel viewModel, string uuid)
         {
             if (!_cache.TryGetValue(uuid, out MatchService match))
                 return NotFound();
 
-            match.AddPointForPlayer(match.GetWinPlayerById(model.IdPointWinner));
+            match.AddPointForPlayer(match.GetWinPlayerById(viewModel.IdPointWinner));
 
-            if(match.IsFinished)
+            if(!match.IsFinished)
+                return RedirectToAction(nameof(MatchScore), new { uuid = uuid });
+
+            await _matchRep.AddAsync(match.IdPlayer1, match.IdPlayer2, match.WinnerId);
+            _cache.Remove(uuid);
+
+            return View(await GetMatchScoreViewModel(match));
+        }
+
+        private async Task<MatchScoreViewModel> GetMatchScoreViewModel(MatchService match)
+            => new MatchScoreViewModel
             {
-
-            }
-
-            return RedirectToAction(nameof(MatchScore), new { uuid = uuid });
-        }
-
-        private void EndMatch(MatchService match)
-        {
-
-        }
+                Match = match,
+                Player1 = await _playerRep.GetById(match.IdPlayer1),
+                Player2 = await _playerRep.GetById(match.IdPlayer2),
+            };
     }
 }

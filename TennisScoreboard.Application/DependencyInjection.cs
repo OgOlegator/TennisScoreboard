@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using TennisScoreboard.Application.Common.Interfaces;
+using TennisScoreboard.Application.Matches;
 using TennisScoreboard.Application.Players;
 
 namespace TennisScoreboard.Application
@@ -15,6 +16,7 @@ namespace TennisScoreboard.Application
         public static IServiceCollection AddApplication(this IServiceCollection services)
         {
             services.AddScoped<IPlayerRepository, PlayerRepository>();
+            services.AddScoped<IMatchRepository, MatchRepository>();
 
             return services;
         }
