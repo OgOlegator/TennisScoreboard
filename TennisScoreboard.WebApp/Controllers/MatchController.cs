@@ -88,10 +88,8 @@ namespace TennisScoreboard.WebApp.Controllers
             if(!match.IsFinished)
                 return RedirectToAction(nameof(MatchScore), new { uuid = uuid });
 
+            Task.Run(() => _cache.Remove(uuid));
             await _matchRep.AddAsync(match.IdPlayer1, match.IdPlayer2, match.WinnerId);
-            
-            await Task.Factory.StartNew(() 
-                => _cache.Remove(uuid));
 
             return View(await GetMatchScoreViewModel(match));
         }
