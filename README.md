@@ -12,7 +12,8 @@
 - Repository
 - CleanArchitecture (https://github.com/jasontaylordev/CleanArchitecture/tree/net6.0)
 
-Техническое задание проекта: https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/
+Техническое задание проекта: 
+- https://zhukovsd.github.io/java-backend-learning-course/Projects/TennisScoreboard/
 
 Страницы приложения:
 - Главная страница;
