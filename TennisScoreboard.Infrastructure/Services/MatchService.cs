@@ -33,7 +33,7 @@ namespace TennisScoreboard.Infrastructure.Services
         public override void AddPointForPlayer(WinPlayer winPlayer)
         {
             if (IsFinished)
-                throw new Exception("Сет окончен");
+                throw new Exception("Матч окончен");
 
             var set = GetCurrentSet();
 

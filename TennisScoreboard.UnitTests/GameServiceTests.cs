@@ -17,14 +17,14 @@ namespace TennisScoreboard.UnitTests
             game.AddPointForPlayer(WinPlayer.Second);
             game.AddPointForPlayer(WinPlayer.Second);
 
-            Assert.Equal(game.ScorePlayer1, 0);
-            Assert.Equal(game.ScorePlayer2, 0);
-            Assert.Equal(game.IsFinished, false);
+            Assert.Equal(0, game.ScorePlayer1);
+            Assert.Equal(0, game.ScorePlayer2);
+            Assert.False(game.IsFinished);
 
             game.AddPointForPlayer(WinPlayer.First);
 
-            Assert.Equal(game.IsFinished, false);
-            Assert.Equal(game.ScorePlayer1, 1);
+            Assert.False(game.IsFinished);
+            Assert.Equal(1, game.ScorePlayer1);
         }
 
         public void AddPointForPlayer_Score040_Finished()
@@ -36,7 +36,7 @@ namespace TennisScoreboard.UnitTests
             game.AddPointForPlayer(WinPlayer.First);
             game.AddPointForPlayer(WinPlayer.First);
 
-            Assert.Equal(game.IsFinished, true);
+            Assert.True(game.IsFinished);
         }
     }
 }
